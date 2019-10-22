@@ -1,11 +1,7 @@
 ## partybingo 
 
 結婚式の二次会などで利用できるJavaScriptのビンゴスクリプトです。  
-サンプルは[こちら](http://syumai.github.io/partybingo/)で動かしてみることができます。
-
-### Original
-
-https://github.com/sifue/partybingo/
+サンプルは[こちら](http://sifue.github.io/partybingo/)で動かしてみることができます。
 
 ### 使い方
 zipファイルを解凍後、index.htmlをブラウザで開くことで使うことができます。  
@@ -23,6 +19,7 @@ Startボタンはクリックの他、スペースキーを押しても動作し
 動作確認は、
 
 - Chrome
+- Firefox
 
 でしか行っていません。IEおよびEdgeでは動作しません。
 なお、このプロジェクトをZipとしてダウンロードしてお使い頂ければ、
