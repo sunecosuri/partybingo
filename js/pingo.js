@@ -10,17 +10,18 @@ export const Pingo = {
   },
   template: `
     <div class="app">
-      <p class="pingo-number">{{ currentNumber | formatNumber }}</p>
-      <div class="buttons">
-        <button v-if="!started" @click="start" class="btn btn-lg btn-default control">Start</button>
-        <button v-else @click="stop" class="btn btn-lg btn-default control">Stop</button>
-        <button @click="resetWithConfirm" class="btn btn-lg btn-default reset">Reset</button>
+      <div class="current-number">{{ currentNumber | formatNumber }}</div>
+      <div class="button-container">
+        <button v-if="!started" @click="start" class="spin start">Start</button>
+        <button v-else @click="stop" class="spin stop">Stop</button>
       </div>
-      <h3>Histories</h3>
-      <div id="histories" class="row histories">
-        <div v-for="n in selectedNumbers">
-          <div class="col-md-1"><p class="history-number">{{ n | formatNumber }}</p></div>
+      <div class="history-container">
+        <div v-for="n in maxNumber" :class="historyClass(n)">
+          {{ n | formatNumber }}
         </div>
+      </div>
+      <div class="button-container">
+        <button @click="resetWithConfirm" class="reset">Reset</button>
       </div>
     </div>
   `,
@@ -38,6 +39,9 @@ export const Pingo = {
     },
     selectedNumbers() {
       return this.numbers.slice(0, this.selectedCount);
+    },
+    maxNumber() {
+      return this.numbers.length;
     },
   },
   methods: {
@@ -82,6 +86,13 @@ export const Pingo = {
       if (confirm('Do you really want to reset?')) {
         this.reset();
       }
+    },
+    historyClass(n) {
+      let classNames = ['history'];
+      if (this.selectedNumbers.includes(n)) {
+        classNames.push('active');
+      }
+      return classNames;
     },
   },
   filters: {
