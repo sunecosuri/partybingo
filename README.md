@@ -1,6 +1,8 @@
 ## partybingo 
 
-結婚式の二次会などで利用できるJavaScript製のビンゴです。  
+結婚式の二次会などで利用できるJavaScript製のビンゴです。
+
+![partybingo](https://github.com/syumai/partybingo/raw/master/assets/screenshot.png)
 
 ### URL
 
