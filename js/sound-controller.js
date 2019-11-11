@@ -1,12 +1,27 @@
 export class SoundController {
-  constructor(src) {
-    this.audio = new Audio(src);
+  constructor(drumRollSrc, cymbalSrc) {
+    this.drumRollAudio = new Audio(drumRollSrc);
+    this.cymbalAudio = new Audio(cymbalSrc);
+    this.onEnded = null;
+    this.drumRollAudio.addEventListener('ended', () => {
+      if (!this.onEnded) {
+        return;
+      }
+      this.onEnded();
+    });
   }
   play() {
-    this.audio.play();
+    this.drumRollAudio.play();
   }
   stop() {
-    this.audio.pause();
-    this.audio.currentTime = 0;
+    this.stopWithoutSound();
+    this.cymbalAudio.play();
+  }
+  stopWithoutSound() {
+    this.drumRollAudio.pause();
+    this.drumRollAudio.currentTime = 0;
+  }
+  setOnEnded(onEnded) {
+    this.onEnded = onEnded;
   }
 }

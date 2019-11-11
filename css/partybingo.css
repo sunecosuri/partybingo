@@ -1,5 +1,27 @@
+/**
+ * Fonts
+ */
+
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
+
+/**
+ * Common variables
+ */
+
+:root {
+  --base-font: 'Roboto', sans-serif;
+  --monospace-font: 'Roboto Mono', monospace;
+  --primary-color: orange;
+  --secondary-color: lightslategray;
+  --accent-color: orangered;
+  --info-color: skyblue;
+  --inactive-color: gray;
+}
+
+/***
+ * Clear style of button
+ */
 
 button {
   display: flex;
@@ -12,9 +34,13 @@ button {
   appearance: none;
 }
 
+/***
+ * Application styles
+ */
+
 body {
   background-color: #eeeeee;
-  font-family: 'Roboto', sans-serif;
+  font-family: var(--base-font);
 }
 
 .app {
@@ -28,15 +54,19 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Roboto Mono', monospace;
+  font-family: var(--monospace-font);
   background-color: #ffffff;
   border-radius: 20px;
   font-size: 240px;
   line-height: 1;
-  padding: 12px 36px 20px;
-  color: dodgerblue;
+  padding: 12px 36px;
+  color: var(--inactive-color);
   letter-spacing: 18px;
   font-weight: 600;
+}
+
+.current-number.active {
+  color: var(--accent-color);
 }
 
 .button-container {
@@ -54,12 +84,12 @@ button.spin {
 }
 
 button.spin.start {
-  background-color: red;
+  background-color: var(--primary-color);
   color: white;
 }
 
 button.spin.stop {
-  background-color: dodgerblue;
+  background-color: var(--info-color);
   color: white;
 }
 
@@ -81,13 +111,13 @@ button.spin.stop {
   line-height: 1;
   background-color: #ffffff;
   border-radius: 4px;
-  padding: 8px;
+  padding: 6px;
   margin: 3px;
-  color: skyblue;
+  color: var(--info-color);
 }
 
 .history.active {
-  color: orangered;
+  color: var(--accent-color);
 }
 
 button.reset {
@@ -98,10 +128,27 @@ button.reset {
   width: 100px;
   padding: 8px 12px;
   border-radius: 8px;
-  background-color: lightslategray;
+  background-color: var(--inactive-color);
   color: white;
 }
 
 button:hover {
+  opacity: 0.7;
+}
+
+.copyright {
+  margin-top: 20px;
+  padding-right: 12px;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 10px;
+  color: var(--inactive-color);
+}
+
+.copyright a {
+  color: var(--inactive-color)
+}
+
+.copyright a:hover {
   opacity: 0.7;
 }
