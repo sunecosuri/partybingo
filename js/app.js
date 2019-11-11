@@ -1,4 +1,4 @@
-import Vue from '../asset/vue-2.6.10.esm.browser.min.js';
+import Vue from '../assets/vue-2.6.10.esm.browser.min.js';
 import { Pingo } from './pingo.js';
 import { repository } from './repository.js';
 
@@ -26,7 +26,7 @@ export class App {
       initialSelectedCount = 0;
     }
 
-    new Vue({
+    const vm = new Vue({
       el: '#app',
       data: {
         numbers,
@@ -37,10 +37,18 @@ export class App {
       },
       template: `
         <pingo
+          ref="pingo"
           :numbers="numbers"
           :initialSelectedCount="initialSelectedCount"
         />
       `,
+    });
+    const { pingo } = vm.$refs;
+
+    window.addEventListener('keydown', (e) => {
+      if (e.code === "Space" && !e.repeat) {
+        pingo.toggle();
+      }
     });
   }
 }

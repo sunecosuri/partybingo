@@ -1,26 +1,29 @@
 import { SoundController } from './sound-controller.js';
 import { repository } from './repository.js';
 
-const audio = new SoundController('asset/nc79078.mp3');
+const audio = new SoundController(
+  'assets/se_maoudamashii_instruments_drumroll.ogg',
+  'assets/se_maoudamashii_instruments_drum1_cymbal.ogg',
+);
 
 export const Pingo = {
   props: {
-    numbers: Array,
-    initialSelectedCount: Number,
+    numbers: Array, initialSelectedCount: Number,
   },
   template: `
     <div class="app">
-      <p class="pingo-number">{{ currentNumber | formatNumber }}</p>
-      <div class="buttons">
-        <button v-if="!started" @click="start" class="btn btn-lg btn-default control">Start</button>
-        <button v-else @click="stop" class="btn btn-lg btn-default control">Stop</button>
-        <button @click="resetWithConfirm" class="btn btn-lg btn-default reset">Reset</button>
+      <div :class="currentNumberClass">{{ currentNumber | formatNumber }}</div>
+      <div class="button-container">
+        <button v-if="!started" @click="start" class="spin start">Start</button>
+        <button v-else @click="stop" class="spin stop">Stop</button>
       </div>
-      <h3>Histories</h3>
-      <div id="histories" class="row histories">
-        <div v-for="n in selectedNumbers">
-          <div class="col-md-1"><p class="history-number">{{ n | formatNumber }}</p></div>
+      <div class="history-container">
+        <div v-for="n in maxNumber" :class="historyClass(n)">
+          {{ n | formatNumber }}
         </div>
+      </div>
+      <div class="button-container">
+        <button @click="resetWithConfirm" class="reset">Reset</button>
       </div>
     </div>
   `,
@@ -39,6 +42,16 @@ export const Pingo = {
     selectedNumbers() {
       return this.numbers.slice(0, this.selectedCount);
     },
+    maxNumber() {
+      return this.numbers.length;
+    },
+    currentNumberClass() {
+      let classNames = ['current-number'];
+      if (!this.started) {
+        classNames.push('active');
+      }
+      return classNames;
+    }
   },
   methods: {
     rouletto() {
@@ -55,9 +68,13 @@ export const Pingo = {
       audio.play();
       this.rouletto();
     },
-    stop() {
+    stop(withoutSound) {
       this.started = false;
-      audio.stop();
+      if (withoutSound) {
+        audio.stopWithoutSound();
+      } else {
+        audio.stop();
+      }
       this.currentNumberIndex = this.selectedCount;
       this.selectedCount++;
       repository.save({
@@ -65,9 +82,16 @@ export const Pingo = {
         selectedCount: this.selectedCount,
       });
     },
+    toggle() {
+      if (!this.started) {
+        this.start();
+      } else {
+        this.stop();
+      }
+    },
     reset() {
       this.started = false;
-      audio.stop();
+      audio.stopWithoutSound();
       this.currentNumberIndex = -1;
       const numbers = _.shuffle(this.numbers);
       const selectedCount = 0;
@@ -83,10 +107,22 @@ export const Pingo = {
         this.reset();
       }
     },
+    historyClass(n) {
+      let classNames = ['history'];
+      if (this.selectedNumbers.includes(n)) {
+        classNames.push('active');
+      }
+      return classNames;
+    },
   },
   filters: {
     formatNumber(n) {
       return _.padStart((n || 0).toString(), 2, '0');
     },
+  },
+  created() {
+    audio.setOnEnded(() => {
+      this.stop(true);
+    });
   },
 };
