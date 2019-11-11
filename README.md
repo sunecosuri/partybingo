@@ -30,6 +30,7 @@ Startボタンはクリックの他、スペースキーを押しても動作し
 ### Author
 
 Originally made by [sifue](https://github.com/sifue/partybingo)
+
 Updated by [syumai](https://github.com/syumai)
 
 ### License
