@@ -11,15 +11,16 @@ export class SoundController {
     });
   }
   play() {
+    this.drumRollAudio.currentTime = 0;
     this.drumRollAudio.play();
   }
   stop() {
     this.stopWithoutSound();
+    this.cymbalAudio.currentTime = 0;
     this.cymbalAudio.play();
   }
   stopWithoutSound() {
     this.drumRollAudio.pause();
-    this.drumRollAudio.currentTime = 0;
   }
   setOnEnded(onEnded) {
     this.onEnded = onEnded;

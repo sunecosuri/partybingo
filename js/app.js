@@ -45,8 +45,9 @@ export class App {
     });
     const { pingo } = vm.$refs;
 
-    window.addEventListener('keydown', (e) => {
-      if (e.code === "Space" && !e.repeat) {
+    window.addEventListener('keydown', e => {
+      e.preventDefault();
+      if (e.code === 'Space' && !e.repeat) {
         pingo.toggle();
       }
     });
