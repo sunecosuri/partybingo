@@ -4,7 +4,7 @@ export class SoundController {
     this.cymbalAudio = new Audio(cymbalSrc);
     this.onEnded = null;
     this.drumRollAudio.addEventListener('ended', () => {
-      if (!this.onEnded) {
+      if (typeof this.onEnded !== 'function') {
         return;
       }
       this.onEnded();

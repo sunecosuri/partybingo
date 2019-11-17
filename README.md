@@ -12,26 +12,29 @@ https://syumai.github.io/partybingo/
 
 Startボタンを押すとルーレットがスタートし、Stopボタンを押すとルーレットがストップします。  
 ドラムロールは10秒ほど流れます。  
-Startボタンはクリックの他、スペースキーを押しても動作します。  
+Start / Stopは、スペースキーを押しても動作します。  
 なお、ルーレットの履歴はローカルストレージに保存しているため、
 再読み込みをしても消えません。  
 リセットボタンをクリックすることで履歴をクリアします。  
+
+#### 表示する数字の最大数の変更
+
+* デフォルトでは、最大75までの数字を表示するようになっていますが、URL末尾に `?max=最大数` を足すことで変更が可能です。
+  - 例: https://syumai.github.io/partybingo/?max=100
 
 ### 動作環境
 
 動作確認は、
 
-- Chrome
+* Chrome
 
 でしか行っていません。IEおよびEdgeでは動作しません。
-なお、このプロジェクトをZipとしてダウンロードしてお使い頂ければ、
-インターネット接続は不要です。
+Safariでは、音声が再生されません。(oggを使用しているため）
 
-### Author
+### Authors
 
-Originally made by [sifue](https://github.com/sifue/partybingo)
-
-Updated by [syumai](https://github.com/syumai)
+* Originally created by [sifue](https://github.com/sifue/partybingo)
+* Updated by [syumai](https://github.com/syumai)
 
 ### License
 

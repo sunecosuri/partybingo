@@ -15,7 +15,7 @@ export const Pingo = {
       <div :class="currentNumberClass">{{ currentNumber | formatNumber }}</div>
       <div class="button-container">
         <button v-if="!started" @click="start" class="spin start">Start</button>
-        <button v-else @click="stop" class="spin stop">Stop</button>
+        <button v-else @click="stop(false)" class="spin stop">Stop</button>
       </div>
       <div class="history-container">
         <div v-for="n in maxNumber" :class="historyClass(n)">
