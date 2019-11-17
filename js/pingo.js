@@ -3,23 +3,24 @@ import { repository } from './repository.js';
 
 const audio = new SoundController(
   'assets/se_maoudamashii_instruments_drumroll.ogg',
-  'assets/se_maoudamashii_instruments_drum1_cymbal.ogg',
+  'assets/se_maoudamashii_instruments_drum1_cymbal.ogg'
 );
 
 export const Pingo = {
   props: {
-    numbers: Array, initialSelectedCount: Number,
+    numbers: Array,
+    initialSelectedCount: Number,
   },
   template: `
     <div class="app">
-      <div :class="currentNumberClass">{{ currentNumber | formatNumber }}</div>
+      <div :class="currentNumberClass">{{ formatNumber(currentNumber) }}</div>
       <div class="button-container">
         <button v-if="!started" @click="start" class="spin start">Start</button>
         <button v-else @click="stop(false)" class="spin stop">Stop</button>
       </div>
       <div class="history-container">
         <div v-for="n in maxNumber" :class="historyClass(n)">
-          {{ n | formatNumber }}
+          {{ formatNumber(n) }}
         </div>
       </div>
       <div class="button-container">
@@ -51,7 +52,7 @@ export const Pingo = {
         classNames.push('active');
       }
       return classNames;
-    }
+    },
   },
   methods: {
     rouletto() {
@@ -114,10 +115,13 @@ export const Pingo = {
       }
       return classNames;
     },
-  },
-  filters: {
     formatNumber(n) {
-      return _.padStart((n || 0).toString(), 2, '0');
+      let padWidth = 0;
+      let m = this.maxNumber;
+      for (; m >= 1; padWidth++) {
+        m /= 10;
+      }
+      return _.padStart((n || 0).toString(), padWidth, '0');
     },
   },
   created() {
