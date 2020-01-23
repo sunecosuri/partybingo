@@ -101,8 +101,29 @@ button.spin.stop {
   max-width: 800px;
 }
 
+.history-container li {
+  margin: 0 1% 10px;
+  list-style: none;
+}
+
+@media screen and (min-width:901px) {
+  .history-container li{
+    width: calc(19% - 1%);
+  }
+}
+@media screen and (min-width: 601px) and (max-width: 900px) {
+  .history-container li{
+    width: calc(20% - 1%);
+  }
+}
+@media screen and (max-width:600px) {
+  .history-container li{
+    width: calc(49% - 1%);
+  }
+}
 .history {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   font-family: 'Roboto Mono', monospace;
