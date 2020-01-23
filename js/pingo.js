@@ -9,19 +9,22 @@ const audio = new SoundController(
 export const Pingo = {
   props: {
     numbers: Array,
+    strings: Array,
     initialSelectedCount: Number,
   },
   template: `
     <div class="app">
-      <div :class="currentNumberClass">{{ formatNumber(currentNumber) }}</div>
-      <div class="button-container">
+    <div :class="currentNumberClass">{{ currentString || '　　' }}</div>
+    <div class="button-container">
         <button v-if="!started" @click="start" class="spin start">Start</button>
         <button v-else @click="stop(false)" class="spin stop">Stop</button>
       </div>
       <div class="history-container">
-        <div v-for="n in maxNumber" :class="historyClass(n)">
-          {{ formatNumber(n) }}
-        </div>
+        <li v-if="hiraganaList[i].length > 0" v-for="(n, i) in hiraganaList" :class="historyClass(i)">
+          {{ hiraganaList[i] }}
+        </li>
+        <li v-else>
+        </li>
       </div>
       <div class="button-container">
         <button @click="resetWithConfirm" class="reset">Reset</button>
@@ -30,21 +33,22 @@ export const Pingo = {
   `,
   data() {
     return {
-      currentNumberIndex: -1,
+      hiraganaList: ['あ','い','う','え','お','か','き','く','け','こ','さ','し','す','せ','そ','た','ち','つ','て','と','な','に','ぬ','ね','の','は','ひ','ふ','へ','ほ','ま','み','む','め','も','ら','り','る','れ','ろ','や','', 'ゆ','','よ','わ','','を','','ん'],
+      currentIndex: undefined,
       started: false,
       selectedCount: this.initialSelectedCount,
     };
   },
   computed: {
-    currentNumber() {
-      const i = this.currentNumberIndex;
-      return i >= 0 && i < this.numbers.length ? this.numbers[i] : 0;
+    currentString() {
+      const i = this.currentIndex;
+      return this.strings[i];
     },
-    selectedNumbers() {
-      return this.numbers.slice(0, this.selectedCount);
+    selectedStrings() {
+      return this.strings.slice(0, this.selectedCount);
     },
-    maxNumber() {
-      return this.numbers.length;
+    stringList() {
+      return this.strings;
     },
     currentNumberClass() {
       let classNames = ['current-number'];
@@ -57,9 +61,9 @@ export const Pingo = {
   methods: {
     rouletto() {
       if (this.started) {
-        this.currentNumberIndex = _.random(
+        this.currentIndex = _.random(
           this.selectedCount,
-          this.numbers.length - 1
+          this.strings.length - 1
         );
         setTimeout(() => this.rouletto(), 60);
       }
@@ -76,10 +80,10 @@ export const Pingo = {
       } else {
         audio.stop();
       }
-      this.currentNumberIndex = this.selectedCount;
+      this.currentIndex = this.selectedCount;
       this.selectedCount++;
       repository.save({
-        numbers: this.numbers,
+        strings: this.strings,
         selectedCount: this.selectedCount,
       });
     },
@@ -93,14 +97,13 @@ export const Pingo = {
     reset() {
       this.started = false;
       audio.stopWithoutSound();
-      this.currentNumberIndex = -1;
-      const numbers = _.shuffle(this.numbers);
+      this.currentIndex = -1;
+      const strings = _.shuffle(this.strings);
       const selectedCount = 0;
       repository.save({
-        numbers,
+        strings,
         selectedCount,
       });
-      this.numbers = numbers;
       this.selectedCount = selectedCount;
     },
     resetWithConfirm() {
@@ -110,7 +113,7 @@ export const Pingo = {
     },
     historyClass(n) {
       let classNames = ['history'];
-      if (this.selectedNumbers.includes(n)) {
+      if (this.selectedStrings.includes(this.hiraganaList[n]) || this.select) {
         classNames.push('active');
       }
       return classNames;

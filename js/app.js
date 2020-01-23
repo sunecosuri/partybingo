@@ -14,23 +14,24 @@ export class App {
     console.log('config', {
       maxNumber,
     });
-
-    let { numbers, selectedCount: initialSelectedCount } =
-      repository.load() || {};
+    const hiraganaList = ['あ','い','う','え','お','か','き','く','け','こ','さ','し','す','せ','そ','た','ち','つ','て','と','な','に','ぬ','ね','の','は','ひ','ふ','へ','ほ','ま','み','む','め','も','や','ゆ','よ','ら','り','る','れ','ろ','わ','を','ん'];
+    let { numbers, strings, selectedCount } = repository.load() || {};
     if (
-      !Array.isArray(numbers) ||
+      !Array.isArray(numbers, selectedCount) ||
       numbers.length !== maxNumber ||
-      typeof initialSelectedCount !== 'number'
+      typeof selectedCount !== 'number'
     ) {
+      strings = _.shuffle(hiraganaList);
       numbers = _.shuffle(_.range(1, maxNumber + 1));
-      initialSelectedCount = 0;
+      selectedCount = 0;
     }
 
     const vm = new Vue({
       el: '#app',
       data: {
+        strings,
         numbers,
-        initialSelectedCount,
+        selectedCount,
       },
       components: {
         Pingo,
@@ -38,8 +39,9 @@ export class App {
       template: `
         <pingo
           ref="pingo"
+          :strings="strings"
           :numbers="numbers"
-          :initialSelectedCount="initialSelectedCount"
+          :initialSelectedCount="selectedCount"
         />
       `,
     });
