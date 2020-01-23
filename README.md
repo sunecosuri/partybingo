@@ -2,7 +2,7 @@
 
 結婚式の二次会などで利用できるJavaScript製のビンゴです。
 
-![partybingo](https://github.com/sunecosuri/partybingo/raw/master/assets/screenshot.png)
+![partybingo](https://github.com/sunecosuri/partybingo/raw/master/assets/capture.png)
 
 ### 使い方
 
